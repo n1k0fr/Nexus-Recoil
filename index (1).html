@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Nexus Recoil — Free, open-source recoil compensation for Rainbow Six Siege. Clean, safe, and community-trusted.">
+<title>Nexus Recoil — Free R6S Recoil Control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #e03030; --red-dim: #a02020; --red-glow: rgba(224,48,48,0.18);
+    --bg: #0e0e0e; --surface: #161616; --surface2: #1e1e1e; --surface3: #272727;
+    --border: rgba(255,255,255,0.07); --border-red: rgba(224,48,48,0.3);
+    --text: #f0f0f0; --muted: #888; --green: #22c55e;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.65; overflow-x: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 6%; height: 64px; background: rgba(14,14,14,0.88); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Rajdhani', sans-serif; font-size: 1.4rem; font-weight: 700; letter-spacing: 0.04em; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .nav-logo span { color: var(--red); }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 8px var(--red); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.35} }
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta { background: var(--red) !important; color: #fff !important; padding: 0.45rem 1.2rem; border-radius: 6px; font-weight: 500 !important; transition: background 0.2s, transform 0.15s !important; }
+  .nav-cta:hover { background: var(--red-dim) !important; transform: translateY(-1px); }
+
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 6% 60px; position: relative; overflow: hidden; }
+  .hero::before { content:''; position: absolute; top:-10%; left:50%; transform:translateX(-50%); width:700px; height:700px; background: radial-gradient(circle, rgba(224,48,48,0.11) 0%, transparent 70%); pointer-events:none; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 7px; background: var(--surface2); border: 1px solid var(--border-red); color: var(--red); font-size: 0.75rem; font-weight: 500; padding: 0.35rem 0.9rem; border-radius: 99px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2rem; animation: fadeUp 0.6s ease both; }
+  .hero-badge::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow: 0 0 6px var(--green); }
+  h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 700; line-height: 1; letter-spacing: -0.01em; margin-bottom: 1.5rem; animation: fadeUp 0.6s 0.1s ease both; }
+  h1 em { font-style: normal; color: var(--red); }
+  .hero-sub { font-size: clamp(1rem, 2vw, 1.15rem); color: var(--muted); max-width: 520px; margin: 0 auto 2.5rem; font-weight: 300; animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.6s 0.3s ease both; }
+  .btn-primary { background: var(--red); color: #fff; text-decoration: none; padding: 0.8rem 2rem; border-radius: 8px; font-weight: 500; font-size: 0.95rem; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-primary:hover { background: var(--red-dim); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(224,48,48,0.3); }
+  .btn-secondary { background: var(--surface2); color: var(--text); text-decoration: none; padding: 0.8rem 2rem; border-radius: 8px; font-weight: 400; font-size: 0.95rem; border: 1px solid var(--border); transition: border-color 0.2s, transform 0.15s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+  .hero-stats { display: flex; gap: 3rem; margin-top: 4rem; animation: fadeUp 0.6s 0.4s ease both; }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Rajdhani', sans-serif; font-size: 2rem; font-weight: 700; color: var(--red); display: block; }
+  .stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+  .ui-preview { padding: 0 6% 100px; display: flex; justify-content: center; animation: fadeUp 0.8s 0.5s ease both; }
+  .ui-window { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; width: 100%; max-width: 460px; box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04); }
+  .ui-titlebar { background: #111; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+  .ui-title-left { display: flex; align-items: center; gap: 8px; font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.04em; }
+  .ui-reddot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 6px var(--red); }
+  .ui-close { width: 12px; height: 12px; border-radius: 50%; background: #444; }
+  .ui-status { display: flex; align-items: center; gap: 5px; font-size: 0.72rem; font-weight: 500; color: var(--green); letter-spacing: 0.06em; }
+  .ui-sdot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+  .ui-body { padding: 16px; }
+  .ui-lbl { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .ui-lbl::after { content:''; flex:1; height:1px; background: var(--border); }
+  .ui-sliders { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .ui-sr { display: flex; flex-direction: column; gap: 5px; }
+  .ui-sh { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); }
+  .ui-sh span:last-child { color: var(--text); font-weight: 500; }
+  .ui-track { height: 4px; background: #2a2a2a; border-radius: 2px; position: relative; }
+  .ui-fill { height: 100%; background: var(--red); border-radius: 2px; position: relative; }
+  .ui-fill::after { content:''; position: absolute; right:-5px; top:50%; transform:translateY(-50%); width:10px; height:10px; background:var(--red); border-radius:50%; box-shadow:0 0 6px var(--red); }
+  .ui-tabs { display: flex; gap: 4px; margin-bottom: 12px; }
+  .ui-tab { padding: 4px 12px; border-radius: 5px; font-size: 0.75rem; font-weight: 500; color: var(--muted); }
+  .ui-tab.active { background: rgba(224,48,48,0.15); color: var(--red); border-bottom: 1px solid var(--red); }
+  .ui-sel { width: 100%; background: #1a1a1a; border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; font-size: 0.8rem; color: var(--text); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
+  .ui-btns { display: flex; gap: 6px; }
+  .ui-btn { flex:1; padding: 6px; border-radius: 5px; font-size: 0.75rem; font-weight: 500; text-align: center; background: var(--surface3); border: 1px solid var(--border); color: var(--text); }
+  .ui-btn.p { background: rgba(224,48,48,0.15); border-color: var(--border-red); color: var(--red); }
+
+  section { padding: 100px 6%; }
+  .section-tag { display: inline-block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 0.8rem; font-weight: 500; }
+  h2 { font-family: 'Rajdhani', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.1; margin-bottom: 1rem; }
+  h2 em { font-style: normal; color: var(--red); }
+  .sub { color: var(--muted); font-size: 1rem; max-width: 520px; font-weight: 300; margin-bottom: 3rem; }
+
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .fc { background: var(--surface); padding: 2rem; transition: background 0.2s; }
+  .fc:hover { background: var(--surface2); }
+  .fc-icon { width:40px; height:40px; border-radius:8px; background:rgba(224,48,48,0.12); border:1px solid var(--border-red); display:flex; align-items:center; justify-content:center; font-size:1.1rem; margin-bottom:1rem; }
+  .fc-title { font-family:'Rajdhani',sans-serif; font-size:1.1rem; font-weight:600; margin-bottom:0.4rem; letter-spacing:0.02em; }
+  .fc-desc { font-size:0.88rem; color:var(--muted); line-height:1.6; font-weight:300; }
+
+  .how-section { background: var(--surface); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; counter-reset: steps; }
+  .step { position:relative; padding:1.5rem; background:var(--bg); border:1px solid var(--border); border-radius:10px; counter-increment:steps; }
+  .step::before { content:counter(steps,decimal-leading-zero); font-family:'Rajdhani',sans-serif; font-size:2.5rem; font-weight:700; color:var(--red); opacity:0.2; position:absolute; top:12px; right:16px; line-height:1; }
+  .step-title { font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:600; margin-bottom:0.4rem; }
+  .step-desc { font-size:0.85rem; color:var(--muted); font-weight:300; }
+
+  .safe-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:start; }
+  .safe-list { list-style:none; display:flex; flex-direction:column; gap:1rem; }
+  .safe-list li { display:flex; align-items:flex-start; gap:12px; font-size:0.92rem; }
+  .si { width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; flex-shrink:0; margin-top:2px; }
+  .si.yes { background:rgba(34,197,94,0.15); color:var(--green); border:1px solid rgba(34,197,94,0.3); }
+  .si.no  { background:rgba(224,48,48,0.12); color:var(--red); border:1px solid var(--border-red); }
+  .safe-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:2rem; }
+  .safe-box h3 { font-family:'Rajdhani',sans-serif; font-size:1.4rem; font-weight:700; margin-bottom:1rem; }
+  .safe-box p { font-size:0.88rem; color:var(--muted); line-height:1.7; font-weight:300; }
+  .hash-box { margin-top:1.2rem; background:#111; border:1px solid var(--border); border-radius:8px; padding:0.8rem 1rem; font-family:'Courier New',monospace; font-size:0.72rem; color:var(--green); word-break:break-all; line-height:1.6; }
+  .hash-label { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:4px; font-family:'DM Sans',sans-serif; }
+
+  .faq-list { display:flex; flex-direction:column; gap:8px; max-width:700px; }
+  details { background:var(--surface); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  summary { padding:1.1rem 1.4rem; cursor:pointer; font-weight:500; font-size:0.95rem; list-style:none; display:flex; justify-content:space-between; align-items:center; user-select:none; }
+  summary::-webkit-details-marker { display:none; }
+  summary::after { content:'+'; font-size:1.2rem; color:var(--red); font-weight:300; transition:transform 0.2s; }
+  details[open] summary::after { transform:rotate(45deg); }
+  details[open] summary { color:var(--red); border-bottom:1px solid var(--border); }
+  .faq-body { padding:1rem 1.4rem; font-size:0.88rem; color:var(--muted); line-height:1.7; font-weight:300; }
+
+  .dl-section { text-align:center; padding:100px 6%; position:relative; overflow:hidden; }
+  .dl-section::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(224,48,48,0.08) 0%, transparent 65%); pointer-events:none; }
+  .dl-section h2 { margin-bottom:0.8rem; }
+  .dl-section p { color:var(--muted); margin-bottom:2rem; font-size:1rem; font-weight:300; }
+  .dl-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+
+  .disclaimer { background:rgba(224,48,48,0.05); border-top:1px solid var(--border-red); padding:1rem 6%; text-align:center; font-size:0.78rem; color:var(--muted); line-height:1.6; }
+
+  footer { background:var(--surface); border-top:1px solid var(--border); padding:3rem 6%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+  .footer-logo { font-family:'Rajdhani',sans-serif; font-size:1.2rem; font-weight:700; }
+  .footer-logo span { color:var(--red); }
+  .footer-links { display:flex; gap:1.5rem; }
+  .footer-links a { color:var(--muted); text-decoration:none; font-size:0.85rem; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--text); }
+  .footer-copy { font-size:0.8rem; color:var(--muted); }
+
+  .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity:1; transform:none; }
+
+  @media(max-width:768px) {
+    .safe-grid { grid-template-columns:1fr; }
+    .hero-stats { gap:1.5rem; }
+    .nav-links { display:none; }
+    footer { flex-direction:column; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo"><div class="nav-dot"></div>Nexus<span>Recoil</span></a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#safety">Safety</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="https://github.com" target="_blank">GitHub</a></li>
+    <li><a href="#download" class="nav-cta">Download</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">100% Free &nbsp;·&nbsp; Open Source &nbsp;·&nbsp; No RATs</div>
+  <h1>Control Your<br><em>Recoil.</em><br>Win Your Fights.</h1>
+  <p class="hero-sub">Nexus Recoil is a free, open-source recoil compensation tool built specifically for Rainbow Six Siege. Clean code. No injection. No malware. Ever.</p>
+  <div class="hero-btns">
+    <a href="#download" class="btn-primary">⬇ Download Free</a>
+    <a href="https://github.com" target="_blank" class="btn-secondary">⭐ View Source</a>
+    <a href="https://discord.gg" target="_blank" class="btn-secondary">💬 Join Discord</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Free Forever</span></div>
+    <div class="stat"><span class="stat-num">0</span><span class="stat-label">Malicious Code</span></div>
+    <div class="stat"><span class="stat-num">60+</span><span class="stat-label">Weapon Presets</span></div>
+  </div>
+</section>
+
+<div class="ui-preview reveal">
+  <div class="ui-window">
+    <div class="ui-titlebar">
+      <div class="ui-title-left"><div class="ui-reddot"></div>Nexus Recoil &nbsp;<span style="color:var(--muted);font-size:0.72rem;font-weight:400">v3.0</span></div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="ui-status"><div class="ui-sdot"></div>ACTIVE</div>
+        <div class="ui-close"></div>
+      </div>
+    </div>
+    <div class="ui-body">
+      <div class="ui-lbl">Recoil Compensation</div>
+      <div class="ui-sliders">
+        <div class="ui-sr"><div class="ui-sh"><span>↓ Down</span><span>12</span></div><div class="ui-track"><div class="ui-fill" style="width:24%"></div></div></div>
+        <div class="ui-sr"><div class="ui-sh"><span>↑ Up</span><span>0</span></div><div class="ui-track"><div class="ui-fill" style="width:0%"></div></div></div>
+        <div class="ui-sr"><div class="ui-sh"><span>→ Right</span><span>4</span></div><div class="ui-track"><div class="ui-fill" style="width:8%"></div></div></div>
+        <div class="ui-sr"><div class="ui-sh"><span>← Left</span><span>0</span></div><div class="ui-track"><div class="ui-fill" style="width:0%"></div></div></div>
+      </div>
+      <div class="ui-lbl">Weapon Preset</div>
+      <div class="ui-tabs"><div class="ui-tab active">Attackers</div><div class="ui-tab">Defenders</div><div class="ui-tab">Custom</div></div>
+      <div class="ui-sel"><span>R4-C</span><span style="color:var(--muted);font-size:0.7rem">▼</span></div>
+      <div class="ui-btns"><div class="ui-btn p">Load</div><div class="ui-btn">Save</div><div class="ui-btn">New</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="features">
+  <div class="reveal"><span class="section-tag">Features</span><h2>Everything You Need.<br><em>Nothing You Don't.</em></h2><p class="sub">Built to be simple for new players and powerful enough for veterans.</p></div>
+  <div class="features-grid reveal">
+    <div class="fc"><div class="fc-icon">🎯</div><div class="fc-title">60+ Weapon Presets</div><div class="fc-desc">Every R6S primary weapon included, split across Attacker and Defender tabs with most popular guns at the top.</div></div>
+    <div class="fc"><div class="fc-icon">⌨️</div><div class="fc-title">Custom Hotkeys</div><div class="fc-desc">Rebind every key — Toggle UI, Enable, and Disable — with a single click. Any key on your keyboard works.</div></div>
+    <div class="fc"><div class="fc-icon">👁️</div><div class="fc-title">ImGui-Style Overlay</div><div class="fc-desc">Press Insert to show or hide. Always on top, no taskbar clutter, remembers your last screen position.</div></div>
+    <div class="fc"><div class="fc-icon">💾</div><div class="fc-title">Custom Profiles</div><div class="fc-desc">Save your own tuned settings per weapon. Create, load, and delete custom profiles stored locally.</div></div>
+    <div class="fc"><div class="fc-icon">🛡️</div><div class="fc-title">External & Clean</div><div class="fc-desc">Standard Windows mouse APIs only. No injection, no kernel drivers, no suspicious network calls. Ever.</div></div>
+    <div class="fc"><div class="fc-icon">🆓</div><div class="fc-title">100% Free</div><div class="fc-desc">No subscriptions, paywalls, or ads. Free for everyone forever. Full source code on GitHub.</div></div>
+  </div>
+</section>
+
+<section id="how" class="how-section">
+  <div class="reveal"><span class="section-tag">How It Works</span><h2>Up and Running in<br><em>60 Seconds.</em></h2><p class="sub">No complicated setup. No drivers. Just download and play.</p></div>
+  <div class="steps reveal">
+    <div class="step"><div class="step-title">Download & Launch</div><div class="step-desc">Download the single .exe. No installer needed. Run it — nothing installs to your system.</div></div>
+    <div class="step"><div class="step-title">Press Insert</div><div class="step-desc">The overlay appears. Pick Attacker or Defender tab and select your weapon from the dropdown.</div></div>
+    <div class="step"><div class="step-title">Click Load</div><div class="step-desc">Preset values load into the sliders. Fine-tune if you want, or use them as-is straight away.</div></div>
+    <div class="step"><div class="step-title">Press F1 & Play</div><div class="step-desc">F1 activates. Hold your aim key while shooting. F2 deactivates. Insert hides the UI anytime.</div></div>
+  </div>
+</section>
+
+<section id="safety">
+  <div class="reveal"><span class="section-tag">Safety & Trust</span><h2>Verify Everything<br><em>Yourself.</em></h2><p class="sub">We know RATs disguised as gaming tools exist — we've seen them too. Here's why Nexus Recoil is different.</p></div>
+  <div class="safe-grid reveal">
+    <ul class="safe-list">
+      <li><div class="si yes">✓</div><div><strong>Open source on GitHub</strong> — read every line of code before running it</div></li>
+      <li><div class="si yes">✓</div><div><strong>SHA256 hash published</strong> with every release so you can verify your download</div></li>
+      <li><div class="si yes">✓</div><div><strong>Standard Windows API only</strong> — uses mouse_event, same as accessibility tools</div></li>
+      <li><div class="si yes">✓</div><div><strong>No internet connection</strong> — zero telemetry, zero analytics, zero callbacks home</div></li>
+      <li><div class="si yes">✓</div><div><strong>Single clean .exe</strong> — no installer, no background services, no startup entries</div></li>
+      <li><div class="si no">✗</div><div><strong>No kernel drivers</strong> — we don't touch ring-0 and never will</div></li>
+      <li><div class="si no">✗</div><div><strong>No process injection</strong> — we never touch the game's memory</div></li>
+      <li><div class="si no">✗</div><div><strong>No credential harvesting</strong> — no Discord token grabbing, no password stealing</div></li>
+    </ul>
+    <div class="safe-box">
+      <h3>Check It on VirusTotal</h3>
+      <p>Every release is scanned before publishing. The SHA256 of the current release is below — paste it into VirusTotal yourself to verify.</p>
+      <div class="hash-box"><div class="hash-label">SHA256 — v3.0</div>[HASH POSTED HERE AFTER BUILD]</div>
+      <p style="margin-top:1rem">Only ever download from this website or our pinned Discord message. Any other source claiming to be Nexus Recoil is not from us.</p>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--surface)">
+  <div class="reveal"><span class="section-tag">FAQ</span><h2>Common <em>Questions.</em></h2><p class="sub">Read this before asking in Discord — it saves everyone time.</p></div>
+  <div class="faq-list reveal">
+    <details><summary>Will this get me banned in Rainbow Six Siege?</summary><div class="faq-body">Nexus Recoil uses standard Windows mouse input APIs that thousands of legitimate apps use daily. It does not inject into the game, read game memory, or use kernel drivers. That said, any third-party tool that modifies gameplay input is against Ubisoft's ToS and is entirely at your own risk. We make no guarantees. Use responsibly.</div></details>
+    <details><summary>Why is it free? What's the catch?</summary><div class="faq-body">No catch. This is a community project. The code is fully open source, there are no ads, no subscriptions, and no hidden data collection. We built it because the community deserves a safe, trustworthy free tool after seeing how many RATs are disguised as gaming utilities.</div></details>
+    <details><summary>How do I know it's not a virus?</summary><div class="faq-body">Read the full source code on GitHub before downloading. Every release has a SHA256 hash posted here — verify it on VirusTotal yourself. We also document exactly which Windows APIs are used: mouse_event and GetAsyncKeyState. Both are standard, non-suspicious, and used by thousands of legitimate programs.</div></details>
+    <details><summary>The preset values don't feel right for my setup. What do I do?</summary><div class="faq-body">Presets are starting points. Every DPI, sensitivity, and resolution combo is different. Load a preset as a base, tune the sliders until it feels right for you, then save it as a Custom preset so you never have to redo it.</div></details>
+    <details><summary>Does it work with side mouse buttons as the aim key?</summary><div class="faq-body">Yes. The aim key dropdown supports Right Mouse Button, Left Mouse Button, Middle Mouse Button, Side Button 1 (Mouse 4) and Side Button 2 (Mouse 5). Pick whichever you use to ADS in-game.</div></details>
+    <details><summary>My antivirus flagged it. Is that normal?</summary><div class="faq-body">Some antivirus tools flag programs using mouse input APIs as potentially suspicious — this is a false positive. Verify by reading the source code on GitHub. We submit the exe to major AV vendors for whitelisting with every release. If you are unsure, do not run it. Your safety matters more than using our tool.</div></details>
+    <details><summary>Can I contribute or suggest new features?</summary><div class="faq-body">Absolutely. Open an issue or pull request on GitHub, or post in our Discord. This is a community tool and contributions of all kinds are welcome.</div></details>
+  </div>
+</section>
+
+<section id="download" class="dl-section">
+  <div class="reveal">
+    <span class="section-tag">Download</span>
+    <h2>Ready to <em>Get Started?</em></h2>
+    <p>Free. Open source. No strings attached. Requires Windows 10 or 11 and .NET 8 Runtime.</p>
+    <div class="dl-btns">
+      <a href="#" class="btn-primary">⬇ Download v3.0 for Windows</a>
+      <a href="https://github.com" target="_blank" class="btn-secondary">⭐ Star on GitHub</a>
+      <a href="https://discord.gg" target="_blank" class="btn-secondary">💬 Join Discord</a>
+    </div>
+  </div>
+</section>
+
+<div class="disclaimer">⚠️ Nexus Recoil is provided for educational and accessibility purposes. Using third-party input tools in online games may violate their Terms of Service and could result in account penalties. You are solely responsible for how you use this software. Not affiliated with Ubisoft or Rainbow Six Siege.</div>
+
+<footer>
+  <div class="footer-logo">Nexus<span>Recoil</span></div>
+  <div class="footer-links">
+    <a href="https://github.com" target="_blank">GitHub</a>
+    <a href="https://discord.gg" target="_blank">Discord</a>
+    <a href="#faq">FAQ</a>
+    <a href="#safety">Safety</a>
+  </div>
+  <div class="footer-copy">© 2025 NexusRecoil — Free & Open Source</div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
