@@ -32,13 +32,13 @@
   .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 6% 60px; position: relative; overflow: hidden; }
   .hero::before { content:''; position: absolute; top:-10%; left:50%; transform:translateX(-50%); width:700px; height:700px; background: radial-gradient(circle, rgba(224,48,48,0.11) 0%, transparent 70%); pointer-events:none; }
   .hero-badge { display: inline-flex; align-items: center; gap: 7px; background: var(--surface2); border: 1px solid var(--border-red); color: var(--red); font-size: 0.75rem; font-weight: 500; padding: 0.35rem 0.9rem; border-radius: 99px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2rem; animation: fadeUp 0.6s ease both; }
-  .hero-badge::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow: 0 0 6px var(--green); }
+  .hero-badge::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--green); box-dow: 0 0 6px var(--green); }
   h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 700; line-height: 1; letter-spacing: -0.01em; margin-bottom: 1.5rem; animation: fadeUp 0.6s 0.1s ease both; }
   h1 em { font-style: normal; color: var(--red); }
   .hero-sub { font-size: clamp(1rem, 2vw, 1.15rem); color: var(--muted); max-width: 520px; margin: 0 auto 2.5rem; font-weight: 300; animation: fadeUp 0.6s 0.2s ease both; }
   .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.6s 0.3s ease both; }
-  .btn-primary { background: var(--red); color: #fff; text-decoration: none; padding: 0.8rem 2rem; border-radius: 8px; font-weight: 500; font-size: 0.95rem; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; display: inline-flex; align-items: center; gap: 8px; }
-  .btn-primary:hover { background: var(--red-dim); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(224,48,48,0.3); }
+  .btn-primary { background: var(--red); color: #fff; text-decoration: none; padding: 0.8rem 2rem; border-radius: 8px; font-weight: 500; font-size: 0.95rem; transition: background 0.2s, transform 0.15s, box-dow 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-primary:hover { background: var(--red-dim); transform: translateY(-2px); box-dow: 0 8px 24px rgba(224,48,48,0.3); }
   .btn-secondary { background: var(--surface2); color: var(--text); text-decoration: none; padding: 0.8rem 2rem; border-radius: 8px; font-weight: 400; font-size: 0.95rem; border: 1px solid var(--border); transition: border-color 0.2s, transform 0.15s; display: inline-flex; align-items: center; gap: 8px; }
   .btn-secondary:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
   .hero-stats { display: flex; gap: 3rem; margin-top: 4rem; animation: fadeUp 0.6s 0.4s ease both; }
@@ -48,10 +48,10 @@
   @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
 
   .ui-preview { padding: 0 6% 100px; display: flex; justify-content: center; animation: fadeUp 0.8s 0.5s ease both; }
-  .ui-window { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; width: 100%; max-width: 460px; box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04); }
+  .ui-window { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; width: 100%; max-width: 460px; box-dow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04); }
   .ui-titlebar { background: #111; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
   .ui-title-left { display: flex; align-items: center; gap: 8px; font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.04em; }
-  .ui-reddot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 6px var(--red); }
+  .ui-reddot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-dow: 0 0 6px var(--red); }
   .ui-close { width: 12px; height: 12px; border-radius: 50%; background: #444; }
   .ui-status { display: flex; align-items: center; gap: 5px; font-size: 0.72rem; font-weight: 500; color: var(--green); letter-spacing: 0.06em; }
   .ui-sdot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
@@ -64,7 +64,7 @@
   .ui-sh span:last-child { color: var(--text); font-weight: 500; }
   .ui-track { height: 4px; background: #2a2a2a; border-radius: 2px; position: relative; }
   .ui-fill { height: 100%; background: var(--red); border-radius: 2px; position: relative; }
-  .ui-fill::after { content:''; position: absolute; right:-5px; top:50%; transform:translateY(-50%); width:10px; height:10px; background:var(--red); border-radius:50%; box-shadow:0 0 6px var(--red); }
+  .ui-fill::after { content:''; position: absolute; right:-5px; top:50%; transform:translateY(-50%); width:10px; height:10px; background:var(--red); border-radius:50%; box-dow:0 0 6px var(--red); }
   .ui-tabs { display: flex; gap: 4px; margin-bottom: 12px; }
   .ui-tab { padding: 4px 12px; border-radius: 5px; font-size: 0.75rem; font-weight: 500; color: var(--muted); }
   .ui-tab.active { background: rgba(224,48,48,0.15); color: var(--red); border-bottom: 1px solid var(--red); }
@@ -160,8 +160,8 @@
   <h1>Fuh the<br><em>Recoil.</em><br>Win Your Fights</h1>
   <p class="hero-sub"> Recoil is a free, open-source anti-recoil built specifically for Rainbow Six Siege. Clean code. No injection. No Bs.</p>
   <div class="hero-btns">
-    <a href="https://github.com/n1k0fr/Nexus-Recoil/releases/download/v1.0.1/NexusRecoil-v1.0.1.zip" class="btn-primary">⬇ Download Free</a>
-    <a href="https://github.com/n1k0fr/Nexus-Recoil/releases/download/v1.0.1/NexusRecoil-v1.0.1.Source.zip" target="_blank" class="btn-secondary">⭐ View Source</a>
+    <a href="https://github.com/n1k0fr/Nexus-Recoil/releases/download/v1.0.2/NexusRecoil-v1.0.2.zip" class="btn-primary">⬇ Download Free</a>
+    <a href="https://github.com/n1k0fr/Nexus-Recoil/releases/download/v1.0.2/NexusRecoil-v1.0.2.Source.zip" target="_blank" class="btn-secondary">⭐ View Source</a>
     <a href="https://discord.gg" target="_blank" class="btn-secondary">💬 Join Discord</a>
   </div>
   <div class="hero-stats">
@@ -234,7 +234,7 @@
     <div class="safe-box">
       <h3>Check It on VirusTotal</h3>
       <p>Every release is scanned before publishing. The SHA256 of the current release is below — paste it into VirusTotal yourself to verify.</p>
-      <div class="hash-box"><div class="hash-label">SHA256 — v1.0</div>a4920d095353c8ce8a3db91f79bc2f7b9f1be809b305b1dcd45311c4b1e9a367</div>
+      <div class="hash-box"><div class="hash-label">SHA256 — v1.0</div>0e6c4624e4248d479913197dd0338a37d414be71d6fdf44baa38edf62329f023</div>
       <p style="margin-top:1rem">Only ever download from this website or our pinned Discord message. Any other source claiming to be  Recoil is not from us.</p>
     </div>
   </div>
@@ -259,7 +259,7 @@
     <h2>Ready to <em>Get Started?</em></h2>
     <p>Free. Open source. No strings attached. Requires Windows 10 or 11 and .NET 8 Runtime.</p>
     <div class="dl-btns">
-      <a href="https://github.com/n1k0fr/Nexus-Recoil/releases/download/v1.0.1/NexusRecoil-v1.0.1.zip" class="btn-primary">⬇ Download v1.0.1 for Windows</a>
+      <a href="https://github.com/n1k0fr/Nexus-Recoil/releases/download/v1.0.2/NexusRecoil-v1.0.2.zip" class="btn-primary">⬇ Download v1.0.2 for Windows</a>
       <a href="https://github.com/n1k0fr/Nexus-Recoil" target="_blank" class="btn-secondary">⭐ Star on GitHub</a>
       <a href="https://discord.gg/gngJgDzBuG" target="_blank" class="btn-secondary">💬 Join Discord</a>
     </div>
